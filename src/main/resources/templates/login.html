@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <script type="text/javascript" th:href="@{/webjars/bootstrap/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:href="@{/webjars/jquery/jquery.js}"></script>
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-fluid bg-light full-height bg-light ">
+        <nav class="navbar navbar-light bg-white">
+            <a class="navbar-brand" href="#">
+                <img style="height: 50px" th:src="@{/images/github.png}">
+                Chat App - Websocket Redis Kafka Docker
+            </a>
+        </nav>
+
+        <div class="text-center d-flex justify-content-center align-items-center pb-3">
+            <div class="rounded border border-0 " style="box-shadow: rgba(18, 38, 63, 0.03) 0px 0.75rem 1.5rem">
+                <div class="position-relative">
+                    <div style="max-width: 600px; background-color: rgba(85, 110, 230, 0.25)"
+                    class="pe-3 ps-3 row align-items-center">
+                        <div class="col text-primary text-start">
+                            <h3>Welcome back !</h3>
+                            <p>Sign in to continue</p>
+                        </div>
+                        <div class="position-absolute top-100 translate-middle start-50" >
+                            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                            style="background-color: rgb(239, 242, 247); height: 72px; width: 72px">
+                                <img th:src="@{/images/redis_icon.png}" style="max-width: 80%"/>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img th:src="@{/images/welcome-back.png}" style="max-width: 100%">
+                        </div>
+                    </div>
+                </div>
+
+                <form class="pt-5 bg-white ps-3 pe-3 pb-3" th:action="@{/login}" method="post">
+                    <div class=" row mb-3">
+                        <label class="form-label col-2" for="username">Username:</label>
+                        <div class="col-10">
+                            <input class="form-control form-control-sm"
+                                   type="text" name="username" placeholder="username" id="username"/>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="form-label col-2" for="password">Password:</label>
+                        <div class="col-10">
+                            <input class="form-control form-control-sm"
+                                   type="password" name="password" placeholder="password" id="password"/>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Sign in</button>
+                </form>
+                <a th:href="@{/new-account}">Create new account</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

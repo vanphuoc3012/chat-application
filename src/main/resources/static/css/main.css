@@ -1,0 +1,19 @@
+.full-height {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: #495057;
+}
+
+.online {
+    color: #2ecc71;
+}
+
+.offline {
+    color: dimgray;
+}

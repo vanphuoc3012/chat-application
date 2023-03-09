@@ -1,0 +1,57 @@
+version: '3'
+
+networks:
+  chat-app:
+    driver: bridge
+
+services:
+  chat-app-zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - chat-app
+  chat-app-kafka:
+    image: 'bitnami/kafka:latest'
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=chat-app-zookeeper:2181
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://host.docker.internal:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      - chat-app-zookeeper
+    networks:
+      - chat-app
+  chat-app-rabbitmq-stomp:
+    image: 'pcloud/rabbitmq-stomp:latest'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+      - '61613:61613'
+    networks:
+      - chat-app
+  chatApplication:
+    image: chatapplication:0.0.1
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - chat-app-kafka
+      - chat-app-rabbitmq-stomp
+    networks:
+      - chat-app
+  chat-app-redis:
+    image: redis/redis-stack:latest
+    ports:
+      - '6381:6379'
+      - '8003:8001'
+    networks:
+      - chat-app
